@@ -378,7 +378,7 @@ export default function HeroText() {
         variants={itemVariants}
         className="flex gap-4 justify-center lg:justify-start"
       >
-        {socialLinks.map((social, index) => (
+        {/* {socialLinks.map((social, index) => (
           <a
             className={`glass-premium p-3 rounded-xl shadow-theme-lg hover:shadow-theme-xl transition-all ${social.color} card-hover cursor-pointer text-base`}
             aria-label={social.label}
@@ -394,7 +394,7 @@ export default function HeroText() {
               <social.icon className="h-6 w-6" />
             </motion.div>
           </a>
-        ))}
+        ))} */}
       </motion.div>
 
       {/* Scroll Indicator */}

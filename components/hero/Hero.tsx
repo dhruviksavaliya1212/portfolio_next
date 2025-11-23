@@ -4,6 +4,7 @@ import HeroText from "./HeroText";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BackgroundGradient } from "../ui/shadcn-io/background-gradient";
+
 // Lazy load heavy background components
 const WavyBackground = lazy(() =>
   import("../ui/shadcn-io/wavy-background").then((mod) => ({
