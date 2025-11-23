@@ -1,30 +1,40 @@
 "use client";
 
-import Lenis from "lenis";
-import { useEffect } from "react";
+import { ReactLenis } from "lenis/react";
+import type { LenisRef } from "lenis/react";
+import { frame, cancelFrame } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-export default function LenisSmooth({
+export default function LenisProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.5,
-      lerp: 0.8,
-    });
+  const lenisRef = useRef<LenisRef>(null);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+  useEffect(() => {
+    function update({ timestamp }: { timestamp: number }) {
+      lenisRef.current?.lenis?.raf(timestamp);
     }
 
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
+    frame.update(update, true);
+    return () => cancelFrame(update);
   }, []);
 
-  return <>{children}</>;
+  return (
+    <ReactLenis
+      root
+      options={{
+        autoRaf: false,
+        lerp: 0.08, // smoother follow speed
+        duration: 1.2, // longer easing curve
+        wheelMultiplier: 0.9, // slower/more controlled
+        touchMultiplier: 1.2,
+        easing: (t) => 1 - Math.pow(1 - t, 3), // buttery easing
+      }}
+      ref={lenisRef}
+    >
+      {children}
+    </ReactLenis>
+  );
 }
